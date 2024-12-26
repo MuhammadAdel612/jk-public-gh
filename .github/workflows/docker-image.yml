@@ -21,7 +21,7 @@ jobs:
       run: docker build . --file Dockerfile --tag $REPO/$IMAGE:$TAG 
     - name: Login to dockerhub
       run:
-        echo "{{ secrets.DOCKER }}" | docker login -u $REPO --password-stdin
+        echo "${{ secrets.DOCKER }}" | docker login -u $REPO --password-stdin
     - name: push to docker hub
       run:
         docker push $REPO/$IMAGE:$TAG
