@@ -13,9 +13,15 @@ jobs:
     runs-on: ubuntu-latest
     env:
       REPO: muhammadadel8
-      IMAGE: NEWPY
+      IMAGE: newpy
       TAG: ${{ github.run_number }}
     steps:
     - uses: actions/checkout@v4
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag $REPO/$IMAGE:$TAG
+      run: docker build . --file Dockerfile --tag $REPO/$IMAGE:$TAG 
+    - name: Login to dockerhub
+      run:
+        echo "{{ secrets.DOCKER }}" | docker login -u $REPO --password-stdin
+    - name: push to docker hub
+      run:
+        docker push $REPO/$IMAGE:$TAG
